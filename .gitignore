@@ -1,0 +1,33 @@
+#Virtual environments
+venv/
+.venv/
+env/
+
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+#  SQLite databases (local Development coopies)
+*.db
+*.sqlite
+*.sqlite3
+instance/
+
+# Environment variables & credentials
+.env
+.env.local
+
+# Flask session / temporary files
+.webassets-cache
+.pytest_cache/
+
+# IDE / Editor configuration
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Operating System metadata
+.DS_Store
+Thumbs.db
