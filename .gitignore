@@ -31,3 +31,7 @@ instance/
 # Operating System metadata
 .DS_Store
 Thumbs.db
+
+#documentation
+*.docx
+*.pdf

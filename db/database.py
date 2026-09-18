@@ -1,5 +1,6 @@
+import os
 import sqlite3
-from flask import g, current_app
+from flask import g
 
 DATABASE = "gatepass.db"
 
@@ -8,21 +9,19 @@ def get_db():
         g.db = sqlite3.connect(
             DATABASE,
             detect_types=sqlite3.PARSE_DECLTYPES
-
         )
-        #Enables column access by name: row["student_number"]
         g.db.row_factory = sqlite3.Row
-        #Crucial: enable foreign key consttraints per connection
         g.db.execute("PRAGMA foreign_keys = ON")
-
     return g.db
 
 def close_db(e=None):
-    db = g.pop("db",None)
+    db = g.pop("db", None)
     if db is not None:
         db.close()
 
 def init_db():
     db = get_db()
-    with open("db/schema.sql", mode="r") as f:
+    # Resolve schema path relative to database.py directory
+    schema_path = os.path.join(os.path.dirname(__file__), "schema.sql")
+    with open(schema_path, mode="r") as f:
         db.executescript(f.read())
