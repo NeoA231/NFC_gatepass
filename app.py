@@ -95,11 +95,11 @@ def claim_tag():
 
     return jsonify({"message": "Gatepass successfully linked"}), 200
 
-@app.route("/register", methods=["GET","POST"])
-def register():
+@app.route("/register", methods=["GET", "POST"])
+def register_page():
     if request.method == "POST":
         data = request.form
-        required = ["student_number", "full_name", "password", "residence_address"]
+        required = ["student_number", "full_name", "password", "residence_address", 'phone']
         if not all(field in data and data[field].strip() for field in required):
             return render_template("register.html", error="All Fields are required.")
 
@@ -110,7 +110,7 @@ def register():
             db.execute(
                 """
                 INSERT INTO students (student_number, full_name, password_hash, phone, residence_address)
-                (?, ?, ?, ?, ?)
+                VALUES (?, ?, ?, ?, ?)
                 """,
                 (data["student_number"].strip(), data["full_name"].strip(), hashed_pw, data["phone"].strip(), data["residence_address"].strip())
             )
@@ -121,3 +121,27 @@ def register():
             return render_template("register.html", error="The student number is already registered.")
 
     return render_template("/register.html")
+
+@app.route("/admin/students", methods=["GET"])
+def admin_students_page():
+    db = get_db()
+    records = db.execute(
+        """
+        SELECT 
+            s.id AS student_id,
+            s.student_number,
+            s.full_name,
+            s.phone,
+            s.residence_address,
+            s.created_at,
+            g.tag_uid,
+            g.laptop_model,
+            g.serial_number,
+            g.is_active
+        FROM students s
+        LEFT JOIN gatepasses g ON s.id = g.student_id
+        ORDER BY s.created_at DESC
+        """
+    ).fetchall()
+
+    return render_template("admin_students.html", records=records)
