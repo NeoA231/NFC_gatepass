@@ -1,5 +1,5 @@
 import datetime
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, redirect, url_for, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from db.database import close_db, get_db, init_db
 
@@ -120,7 +120,7 @@ def register_page():
         except db.IntegrityError:
             return render_template("register.html", error="The student number is already registered.")
 
-    return render_template("/register.html")
+    return render_template("register.html")
 
 @app.route("/admin/students", methods=["GET"])
 def admin_students_page():
@@ -145,3 +145,60 @@ def admin_students_page():
     ).fetchall()
 
     return render_template("admin_students.html", records=records)
+
+# Student login page and handler
+@app.route("/login", methods=["GET","POST"])
+def login_page():
+    if "student_id" in session:
+        return redirect(url_for("dashboard_page"))
+
+    if request.method == "POST":
+        student_number = request.form.get("student_number", "").strip()
+        password = request.form.get("password", "").strip()
+
+        if not student_number or not password:
+            return render_template("login.html", error="please provide both your student number and password")
+
+        db = get_db()
+        student = db.execute(
+            "SELECT * FROM students WHERE student_number = ?",
+            (student_number,)
+        ).fetchone()
+
+        if not student or not check_password_hash(student["password_hash"], password):
+            return render_template("login.html", error="invalid student number or password")
+
+        session.clear()
+        session["student_id"] = student["id"]
+        session["student_number"] = student["student_number"]
+        session["full_name"] = student["full_name"]
+
+        return redirect(url_for("dashboard_page"))
+    return render_template("login.html")
+
+
+# Student Protected Dashboard
+@app.route("/dashboard", methods=["GET"])
+def dashboard_page():
+    if "student_id" not in session:
+        return redirect(url_for("login_page"))
+
+    db = get_db()
+    # Fetch student profile details
+    student = db.execute(
+        "SELECT * FROM students WHERE id = ?", (session["student_id"],)
+    ).fetchone()
+
+    # Fetch any gatepasses linked to this student
+    gatepass = db.execute(
+        "SELECT * FROM gatepasses WHERE student_id = ?", (session["student_id"],)
+    ).fetchone()
+
+    return render_template("dashboard.html", student=student, gatepass=gatepass)
+
+
+# Student Logout Handler
+@app.route("/logout", methods=["POST"])
+def logout_page():
+    session.clear()
+    return redirect(url_for("login_page"))
