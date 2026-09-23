@@ -1,0 +1,129 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+```
+<title>Student Registration - Gatepass System</title>
+
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/style.css') }}"
+/>
+```
+
+  </head>
+
+  <body>
+    <main class="auth-container">
+      <section class="auth-card">
+
+```
+    <div class="auth-header">
+      <span class="auth-label">VUT Gatepass</span>
+
+      <h1>Student Registration</h1>
+
+      <p>
+        Create your student account to register a laptop and NFC tag.
+      </p>
+    </div>
+
+    {% if error %}
+    <div class="error-message">
+      {{ error }}
+    </div>
+    {% endif %}
+
+    {% if success %}
+    <div class="success-message">
+      {{ success }}
+    </div>
+    {% endif %}
+
+    <form method="POST" action="/register">
+
+      <div class="form-group">
+        <label for="student_number">Student Number</label>
+
+        <input
+          type="text"
+          id="student_number"
+          name="student_number"
+          required
+          autocomplete="username"
+          placeholder="e.g. 240955890"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="full_name">Full Name</label>
+
+        <input
+          type="text"
+          id="full_name"
+          name="full_name"
+          required
+          autocomplete="name"
+          placeholder="Enter your full name"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          required
+          autocomplete="tel"
+          placeholder="e.g. 0812345678"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="residence_address">Residence Address</label>
+
+        <textarea
+          id="residence_address"
+          name="residence_address"
+          rows="3"
+          required
+          autocomplete="street-address"
+          placeholder="e.g. Campus Residence or Street Address"
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+
+        <input
+          type="password"
+          id="password"
+          name="password"
+          required
+          autocomplete="new-password"
+          placeholder="Create a password"
+        />
+      </div>
+
+      <button type="submit" class="auth-btn">
+        Create Account
+      </button>
+
+    </form>
+
+    <div class="auth-footer">
+      <span>Already have an account?</span>
+      <a href="/login">Login here</a>
+    </div>
+
+  </section>
+</main>
+```
+
+  </body>
+</html>

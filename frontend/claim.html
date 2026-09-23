@@ -1,0 +1,106 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+```
+<title>Register Laptop - VUT Gatepass</title>
+
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/style.css') }}"
+/>
+```
+
+  </head>
+
+  <body>
+    <main class="auth-container">
+      <section class="auth-card">
+
+```
+    <div class="auth-header">
+      <span class="auth-label">VUT Gatepass</span>
+
+      <h1>Register Laptop</h1>
+
+      <p>
+        Link your laptop and NFC tag to your student gatepass.
+      </p>
+    </div>
+
+    {% if error %}
+    <div class="error-message">
+      {{ error }}
+    </div>
+    {% endif %}
+
+    {% if success %}
+    <div class="success-message">
+      {{ success }}
+    </div>
+    {% endif %}
+
+    <form method="POST" action="/claim">
+
+      <div class="form-group">
+        <label for="tag_uid">NFC Tag UID</label>
+
+        <input
+          type="text"
+          id="tag_uid"
+          name="tag_uid"
+          required
+          placeholder="e.g. 04A1B2C3D4E5"
+          autocomplete="off"
+        />
+
+        <small>
+          Enter the UID assigned to your NFC tag.
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="laptop_model">Laptop Model</label>
+
+        <input
+          type="text"
+          id="laptop_model"
+          name="laptop_model"
+          required
+          placeholder="e.g. Dell Latitude 5420"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="serial_number">Serial Number</label>
+
+        <input
+          type="text"
+          id="serial_number"
+          name="serial_number"
+          required
+          placeholder="Enter your laptop serial number"
+          autocomplete="off"
+        />
+      </div>
+
+      <button type="submit" class="auth-btn">
+        Register Laptop &amp; NFC Tag
+      </button>
+
+    </form>
+
+    <div class="auth-footer">
+      <span>Already registered?</span>
+      <a href="/dashboard">Return to Dashboard</a>
+    </div>
+
+  </section>
+</main>
+```
+
+  </body>
+</html>

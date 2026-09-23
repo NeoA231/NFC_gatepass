@@ -1,0 +1,919 @@
+/* ============================================================
+   NFC LAPTOP GATEPASS SYSTEM
+   Shared Stylesheet
+   ============================================================ */
+
+
+/* ============================================================
+   RESET
+   ============================================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #07111f;
+    color: #f5f7fa;
+    min-height: 100vh;
+    line-height: 1.5;
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+}
+
+
+/* ============================================================
+   COLOUR VARIABLES
+   ============================================================ */
+
+:root {
+    --vut-blue: #0057a8;
+    --vut-blue-dark: #003b73;
+    --vut-blue-light: #0878d1;
+
+    --vut-yellow: #f5c400;
+    --vut-yellow-light: #ffd83d;
+
+    --dark-bg: #07111f;
+    --dark-panel: #0d1b2a;
+    --dark-panel-light: #13263a;
+    --dark-border: #23384d;
+
+    --white: #ffffff;
+    --text-main: #f5f7fa;
+    --text-muted: #9caec1;
+
+    --success: #22c55e;
+    --success-bg: rgba(34, 197, 94, 0.12);
+
+    --danger: #ef4444;
+    --danger-bg: rgba(239, 68, 68, 0.12);
+
+    --shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+}
+
+
+/* ============================================================
+   GENERAL FORM ELEMENTS
+   ============================================================ */
+
+input,
+textarea,
+select {
+    width: 100%;
+    background: #091725;
+    border: 1px solid var(--dark-border);
+    color: var(--white);
+    padding: 12px 14px;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #66788b;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--vut-blue-light);
+    box-shadow: 0 0 0 3px rgba(8, 120, 209, 0.15);
+}
+
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+.primary-btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 11px 18px;
+
+    background: var(--vut-blue);
+    color: var(--white);
+
+    border: none;
+    border-radius: 6px;
+
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 700;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.primary-btn:hover {
+    background: var(--vut-blue-light);
+    transform: translateY(-1px);
+}
+
+
+/* ============================================================
+   LOGIN / REGISTER PAGES
+   ============================================================ */
+
+.auth-container {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 30px 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #06101c 0%,
+            #0a1d31 55%,
+            #07111f 100%
+        );
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 440px;
+
+    background: var(--dark-panel);
+
+    border: 1px solid var(--dark-border);
+    border-top: 4px solid var(--vut-yellow);
+
+    padding: 36px;
+
+    border-radius: 8px;
+
+    box-shadow: var(--shadow);
+}
+
+.auth-header {
+    margin-bottom: 28px;
+}
+
+.auth-label {
+    display: block;
+
+    color: var(--vut-yellow);
+
+    font-size: 0.75rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+
+    margin-bottom: 8px;
+}
+
+.auth-header h1 {
+    color: var(--white);
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+}
+
+.auth-header p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #d9e1e8;
+
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.auth-btn {
+    width: 100%;
+
+    padding: 12px;
+
+    background: var(--vut-blue);
+    color: var(--white);
+
+    border: none;
+    border-radius: 6px;
+
+    font-size: 0.9rem;
+    font-weight: 700;
+
+    margin-top: 5px;
+
+    transition: background 0.2s ease;
+}
+
+.auth-btn:hover {
+    background: var(--vut-blue-light);
+}
+
+.auth-footer {
+    margin-top: 22px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid var(--dark-border);
+
+    text-align: center;
+
+    color: var(--text-muted);
+
+    font-size: 0.85rem;
+}
+
+.auth-footer a {
+    color: var(--vut-yellow);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+.error-message {
+    background: var(--danger-bg);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+
+    color: #fca5a5;
+
+    padding: 10px 12px;
+
+    border-radius: 6px;
+
+    margin-bottom: 18px;
+
+    font-size: 0.85rem;
+}
+
+
+/* ============================================================
+   STUDENT DASHBOARD
+   ============================================================ */
+
+.dashboard-container {
+    width: min(1100px, calc(100% - 40px));
+
+    margin: 0 auto;
+
+    padding: 45px 0 60px;
+}
+
+.dashboard-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: flex-start;
+
+    gap: 25px;
+
+    margin-bottom: 30px;
+
+    padding-bottom: 25px;
+
+    border-bottom: 1px solid var(--dark-border);
+}
+
+.dashboard-label {
+    color: var(--vut-yellow);
+
+    font-size: 0.72rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+
+    margin-bottom: 7px;
+}
+
+.dashboard-heading h1 {
+    font-size: 1.9rem;
+    color: var(--white);
+
+    margin-bottom: 5px;
+}
+
+.student-id {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.student-id strong {
+    color: #dbe7f2;
+}
+
+.logout-btn {
+    padding: 10px 17px;
+
+    background: transparent;
+
+    border: 1px solid #7f2930;
+
+    color: #fca5a5;
+
+    border-radius: 6px;
+
+    font-size: 0.82rem;
+    font-weight: 700;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.logout-btn:hover {
+    background: var(--danger-bg);
+    border-color: var(--danger);
+}
+
+.dashboard-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 22px;
+}
+
+.dashboard-card {
+    background: var(--dark-panel);
+
+    border: 1px solid var(--dark-border);
+
+    border-radius: 8px;
+
+    padding: 25px;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.16);
+}
+
+.card-header {
+    padding-bottom: 17px;
+
+    margin-bottom: 20px;
+
+    border-bottom: 1px solid var(--dark-border);
+}
+
+.card-label {
+    display: block;
+
+    color: var(--vut-yellow);
+
+    font-size: 0.7rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+
+    margin-bottom: 4px;
+}
+
+.card-header h2 {
+    font-size: 1.15rem;
+    color: var(--white);
+}
+
+.profile-details,
+.gatepass-details {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.detail-label {
+    color: var(--text-muted);
+
+    font-size: 0.72rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+}
+
+.detail-value {
+    color: #e7edf3;
+
+    font-size: 0.92rem;
+    font-weight: 500;
+
+    overflow-wrap: anywhere;
+}
+
+.gatepass-status {
+    display: inline-flex;
+
+    align-items: center;
+    gap: 8px;
+
+    background: var(--success-bg);
+
+    border: 1px solid rgba(34, 197, 94, 0.25);
+
+    color: #86efac;
+
+    padding: 7px 11px;
+
+    border-radius: 5px;
+
+    font-size: 0.78rem;
+    font-weight: 700;
+
+    margin-bottom: 22px;
+}
+
+.status-indicator {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: var(--success);
+}
+
+.tag-badge {
+    display: inline-block;
+
+    width: fit-content;
+
+    padding: 6px 9px;
+
+    background: rgba(0, 87, 168, 0.18);
+
+    border: 1px solid rgba(8, 120, 209, 0.35);
+
+    color: #72b9f0;
+
+    border-radius: 4px;
+
+    font-family: monospace;
+
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.serial-number {
+    font-family: monospace;
+
+    font-size: 0.85rem;
+
+    color: #c5d4e2;
+}
+
+.empty-gatepass {
+    text-align: center;
+
+    padding: 25px 10px 10px;
+}
+
+.empty-icon {
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 15px;
+
+    background: rgba(245, 196, 0, 0.1);
+
+    border: 1px solid rgba(245, 196, 0, 0.25);
+
+    color: var(--vut-yellow);
+
+    border-radius: 6px;
+
+    font-family: monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.empty-gatepass h3 {
+    font-size: 1rem;
+
+    margin-bottom: 7px;
+
+    color: var(--white);
+}
+
+.empty-gatepass p {
+    max-width: 320px;
+
+    margin: 0 auto 20px;
+
+    color: var(--text-muted);
+
+    font-size: 0.85rem;
+}
+
+
+/* ============================================================
+   ADMIN PANEL
+   ============================================================ */
+
+.admin-container {
+    width: min(1450px, calc(100% - 40px));
+
+    margin: 0 auto;
+
+    padding: 45px 0 60px;
+}
+
+.admin-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: flex-end;
+
+    gap: 25px;
+
+    margin-bottom: 28px;
+
+    padding-bottom: 24px;
+
+    border-bottom: 1px solid var(--dark-border);
+}
+
+.admin-label {
+    display: block;
+
+    color: var(--vut-yellow);
+
+    font-size: 0.72rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+
+    margin-bottom: 7px;
+}
+
+.admin-heading h1 {
+    font-size: 1.9rem;
+
+    color: var(--white);
+
+    margin-bottom: 5px;
+}
+
+.admin-heading p {
+    color: var(--text-muted);
+
+    font-size: 0.85rem;
+}
+
+.student-count {
+    display: flex;
+
+    align-items: center;
+    gap: 8px;
+
+    padding: 9px 13px;
+
+    background: var(--dark-panel);
+
+    border: 1px solid var(--dark-border);
+
+    border-radius: 6px;
+
+    white-space: nowrap;
+}
+
+.student-count strong {
+    color: var(--vut-yellow);
+
+    font-size: 1.05rem;
+}
+
+.student-count span {
+    color: var(--text-muted);
+
+    font-size: 0.78rem;
+}
+
+.registry-card {
+    background: var(--dark-panel);
+
+    border: 1px solid var(--dark-border);
+
+    border-radius: 8px;
+
+    overflow: hidden;
+
+    box-shadow: var(--shadow);
+}
+
+.registry-header {
+    padding: 22px 24px;
+
+    border-bottom: 1px solid var(--dark-border);
+}
+
+.section-label {
+    display: block;
+
+    color: var(--vut-yellow);
+
+    font-size: 0.68rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+
+    margin-bottom: 4px;
+}
+
+.registry-header h2 {
+    color: var(--white);
+
+    font-size: 1.1rem;
+}
+
+.table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+.student-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    text-align: left;
+
+    font-size: 0.83rem;
+}
+
+.student-table th {
+    background: #0a1725;
+
+    color: #9fb0c1;
+
+    padding: 13px 15px;
+
+    border-bottom: 1px solid var(--dark-border);
+
+    font-size: 0.68rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+
+    white-space: nowrap;
+}
+
+.student-table td {
+    padding: 15px;
+
+    border-bottom: 1px solid rgba(35, 56, 77, 0.7);
+
+    color: #cbd6e0;
+
+    vertical-align: top;
+}
+
+.student-table tbody tr {
+    transition: background 0.15s ease;
+}
+
+.student-table tbody tr:hover {
+    background: rgba(0, 87, 168, 0.07);
+}
+
+.student-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.student-number {
+    color: #e8eef5;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+.student-name {
+    color: #e8eef5;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.tag {
+    display: inline-block;
+
+    padding: 4px 7px;
+
+    border-radius: 4px;
+
+    font-family: monospace;
+
+    font-size: 0.72rem;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.tag-linked {
+    background: rgba(0, 87, 168, 0.18);
+
+    border: 1px solid rgba(8, 120, 209, 0.3);
+
+    color: #72b9f0;
+}
+
+.tag-unlinked {
+    background: rgba(156, 163, 175, 0.08);
+
+    border: 1px solid rgba(156, 163, 175, 0.15);
+
+    color: #7f8d9b;
+}
+
+.status-pill {
+    display: inline-block;
+
+    padding: 4px 8px;
+
+    border-radius: 4px;
+
+    font-size: 0.7rem;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+.status-active {
+    background: var(--success-bg);
+
+    border: 1px solid rgba(34, 197, 94, 0.25);
+
+    color: #86efac;
+}
+
+.status-none {
+    background: rgba(156, 163, 175, 0.08);
+
+    border: 1px solid rgba(156, 163, 175, 0.15);
+
+    color: #7f8d9b;
+}
+
+
+/* ============================================================
+   EMPTY STATES
+   ============================================================ */
+
+.empty-state {
+    text-align: center;
+
+    padding: 60px 25px;
+}
+
+.empty-state-icon {
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 14px;
+
+    background: rgba(245, 196, 0, 0.08);
+
+    border: 1px solid rgba(245, 196, 0, 0.2);
+
+    color: var(--vut-yellow);
+
+    border-radius: 5px;
+
+    font-weight: 700;
+}
+
+.empty-state h3 {
+    color: var(--white);
+
+    font-size: 1rem;
+
+    margin-bottom: 5px;
+}
+
+.empty-state p {
+    color: var(--text-muted);
+
+    font-size: 0.85rem;
+}
+
+
+/* ============================================================
+   RESPONSIVE DESIGN
+   ============================================================ */
+
+@media (max-width: 850px) {
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-header {
+        align-items: flex-start;
+    }
+
+    .admin-header {
+        align-items: flex-start;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .dashboard-container,
+    .admin-container {
+        width: min(100% - 24px, 1100px);
+
+        padding-top: 25px;
+    }
+
+    .dashboard-header,
+    .admin-header {
+        flex-direction: column;
+    }
+
+    .dashboard-heading h1,
+    .admin-heading h1 {
+        font-size: 1.5rem;
+    }
+
+    .dashboard-card {
+        padding: 20px;
+    }
+
+    .auth-card {
+        padding: 27px 22px;
+    }
+
+    .student-count {
+        width: 100%;
+
+        justify-content: center;
+    }
+
+    .logout-btn {
+        width: 100%;
+    }
+
+    .dashboard-header form {
+        width: 100%;
+    }
+
+    .registry-header {
+        padding: 19px;
+    }
+
+    .student-table {
+        min-width: 1050px;
+    }
+}

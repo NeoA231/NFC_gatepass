@@ -1,0 +1,162 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+```
+<title>Student Registry - Admin Panel</title>
+
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/style.css') }}"
+/>
+```
+
+  </head>
+
+  <body>
+    <div class="admin-container">
+
+```
+  <header class="admin-header">
+
+    <div class="admin-heading">
+      <span class="admin-label">Admin Panel</span>
+
+      <h1>Registered Students</h1>
+
+      <p>
+        Directory of students, registered laptops, and associated NFC tags.
+      </p>
+    </div>
+
+    <div class="student-count">
+      <strong>{{ records|length }}</strong>
+      <span>Enrolled Students</span>
+    </div>
+
+  </header>
+
+  <section class="registry-card">
+
+    <div class="registry-header">
+      <div>
+        <span class="section-label">Student Registry</span>
+        <h2>Gatepass Records</h2>
+      </div>
+    </div>
+
+    {% if records %}
+
+    <div class="table-wrapper">
+
+      <table class="student-table">
+
+        <thead>
+          <tr>
+            <th>Student No.</th>
+            <th>Full Name</th>
+            <th>Contact</th>
+            <th>Residence Address</th>
+            <th>NFC Tag UID</th>
+            <th>Laptop Model</th>
+            <th>Serial No.</th>
+            <th>Gatepass Status</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          {% for r in records %}
+
+          <tr>
+
+            <td>
+              <span class="student-number">
+                {{ r.student_number }}
+              </span>
+            </td>
+
+            <td>
+              <span class="student-name">
+                {{ r.full_name }}
+              </span>
+            </td>
+
+            <td>
+              {{ r.phone }}
+            </td>
+
+            <td>
+              {{ r.residence_address }}
+            </td>
+
+            <td>
+              {% if r.tag_uid %}
+              <span class="tag tag-linked">
+                {{ r.tag_uid }}
+              </span>
+              {% else %}
+              <span class="tag tag-unlinked">
+                No Tag
+              </span>
+              {% endif %}
+            </td>
+
+            <td>
+              {{ r.laptop_model or "—" }}
+            </td>
+
+            <td>
+              <span class="serial-number">
+                {{ r.serial_number or "—" }}
+              </span>
+            </td>
+
+            <td>
+              {% if r.tag_uid %}
+              <span class="status-pill status-active">
+                Active
+              </span>
+              {% else %}
+              <span class="status-pill status-none">
+                Unregistered Hardware
+              </span>
+              {% endif %}
+            </td>
+
+          </tr>
+
+          {% endfor %}
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+    {% else %}
+
+    <div class="empty-state">
+
+      <div class="empty-state-icon">—</div>
+
+      <h3>No Student Records</h3>
+
+      <p>
+        No student records were found in the database.
+      </p>
+
+    </div>
+
+    {% endif %}
+
+  </section>
+
+</div>
+```
+
+  </body>
+</html>

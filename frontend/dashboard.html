@@ -1,0 +1,160 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+```
+<title>Student Dashboard - Gatepass System</title>
+
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/style.css') }}"
+/>
+```
+
+  </head>
+
+  <body>
+    <div class="dashboard-container">
+
+```
+  <header class="dashboard-header">
+    <div class="dashboard-heading">
+      <p class="dashboard-label">Student Portal</p>
+
+      <h1>Welcome, {{ student.full_name }}</h1>
+
+      <p class="student-id">
+        Student ID:
+        <strong>{{ student.student_number }}</strong>
+      </p>
+    </div>
+
+    <form method="POST" action="/logout">
+      <button type="submit" class="logout-btn">
+        Log Out
+      </button>
+    </form>
+  </header>
+
+  <main class="dashboard-grid">
+
+    <section class="dashboard-card">
+
+      <div class="card-header">
+        <div>
+          <span class="card-label">Account</span>
+          <h2>Profile Details</h2>
+        </div>
+      </div>
+
+      <div class="profile-details">
+
+        <div class="detail-item">
+          <span class="detail-label">Student Number</span>
+          <span class="detail-value">
+            {{ student.student_number }}
+          </span>
+        </div>
+
+        <div class="detail-item">
+          <span class="detail-label">Full Name</span>
+          <span class="detail-value">
+            {{ student.full_name }}
+          </span>
+        </div>
+
+        <div class="detail-item">
+          <span class="detail-label">Contact Phone</span>
+          <span class="detail-value">
+            {{ student.phone }}
+          </span>
+        </div>
+
+        <div class="detail-item">
+          <span class="detail-label">Residence Address</span>
+          <span class="detail-value">
+            {{ student.residence_address }}
+          </span>
+        </div>
+
+      </div>
+
+    </section>
+
+    <section class="dashboard-card">
+
+      <div class="card-header">
+        <div>
+          <span class="card-label">Gatepass</span>
+          <h2>Registered Laptop</h2>
+        </div>
+      </div>
+
+      {% if gatepass %}
+
+      <div class="gatepass-status">
+        <span class="status-indicator"></span>
+        <span>Gatepass Active</span>
+      </div>
+
+      <div class="gatepass-details">
+
+        <div class="detail-item">
+          <span class="detail-label">NFC Tag UID</span>
+
+          <span class="tag-badge">
+            {{ gatepass.tag_uid }}
+          </span>
+        </div>
+
+        <div class="detail-item">
+          <span class="detail-label">Laptop Model</span>
+
+          <span class="detail-value">
+            {{ gatepass.laptop_model }}
+          </span>
+        </div>
+
+        <div class="detail-item">
+          <span class="detail-label">Serial Number</span>
+
+          <span class="detail-value serial-number">
+            {{ gatepass.serial_number }}
+          </span>
+        </div>
+
+      </div>
+
+      {% else %}
+
+      <div class="empty-gatepass">
+
+        <div class="empty-icon">NFC</div>
+
+        <h3>No Gatepass Registered</h3>
+
+        <p>
+          You currently do not have a laptop or NFC tag
+          linked to your student profile.
+        </p>
+
+        <a href="/claim" class="primary-btn">
+          Register Laptop &amp; Tag
+        </a>
+
+      </div>
+
+      {% endif %}
+
+    </section>
+
+  </main>
+
+</div>
+```
+
+  </body>
+</html>
