@@ -1,0 +1,113 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - VUT Gatepass</title>
+
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+
+
+</head>
+
+<body>
+    <div class="admin-container">
+
+
+        <header class="admin-header">
+            <div class="admin-heading">
+                <span class="admin-label">Administrator Portal</span>
+                <h1>Welcome, {{ admin_name }}</h1>
+                <p>Manage student accounts and laptop gatepasses.</p>
+            </div>
+
+            <form id="adminLogoutForm" action="/logout" method="POST">
+                <button type="submit" class="logout-btn">
+                    Logout
+                </button>
+            </form>
+
+        </header>
+
+        <section class="dashboard-grid">
+
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div>
+                        <span class="card-label">Students</span>
+                        <h2>{{ total_students }}</h2>
+                    </div>
+                </div>
+
+                <p class="detail-value">
+                    Registered student accounts
+                </p>
+
+                <a href="/admin/students" class="primary-btn">
+                    View Registry
+                </a>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div>
+                        <span class="card-label">Gatepasses</span>
+                        <h2>{{ active_gatepasses }}</h2>
+                    </div>
+                </div>
+
+                <p class="detail-value">
+                    Active laptop gatepasses
+                </p>
+
+                <a href="/admin/students" class="primary-btn">
+                    Manage Gatepasses
+                </a>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div>
+                        <span class="card-label">Pending</span>
+                        <h2>{{ unregistered }}</h2>
+                    </div>
+                </div>
+
+                <p class="detail-value">
+                    Students without a registered laptop
+                </p>
+
+                <a href="/admin/students" class="primary-btn">
+                    Review Students
+                </a>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <div>
+                        <span class="card-label">System</span>
+                        <h2>Registry</h2>
+                    </div>
+                </div>
+
+                <p class="detail-value">
+                    View and edit student records.
+                </p>
+
+                <a href="/admin/students" class="primary-btn">
+                    Open Registry
+                </a>
+            </div>
+
+        </section>
+
+    </div>
+
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+
+</body>
+
+</html>

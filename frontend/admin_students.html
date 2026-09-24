@@ -1,162 +1,217 @@
 <!doctype html>
 
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-```
-<title>Student Registry - Admin Panel</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='css/style.css') }}"
-/>
-```
 
-  </head>
+  <title>Student Registry - Admin Panel</title>
 
-  <body>
-    <div class="admin-container">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 
-```
-  <header class="admin-header">
 
-    <div class="admin-heading">
-      <span class="admin-label">Admin Panel</span>
+</head>
 
-      <h1>Registered Students</h1>
+<body>
+  <div class="admin-container">
 
-      <p>
-        Directory of students, registered laptops, and associated NFC tags.
-      </p>
-    </div>
 
-    <div class="student-count">
-      <strong>{{ records|length }}</strong>
-      <span>Enrolled Students</span>
-    </div>
+    <header class="admin-header">
 
-  </header>
+      <div class="admin-heading">
+        <span class="admin-label">Admin Panel</span>
 
-  <section class="registry-card">
 
-    <div class="registry-header">
-      <div>
-        <span class="section-label">Student Registry</span>
-        <h2>Gatepass Records</h2>
+        <h1>Registered Students</h1>
+
+        <p>
+          Directory of students, registered laptops, and associated NFC tags.
+        </p>
+
+
       </div>
-    </div>
 
-    {% if records %}
+      <div class="admin-header-actions">
 
-    <div class="table-wrapper">
 
-      <table class="student-table">
+        <div class="student-count">
+          <strong>{{ records|length }}</strong>
+          <span>Enrolled Students</span>
+        </div>
 
-        <thead>
-          <tr>
-            <th>Student No.</th>
-            <th>Full Name</th>
-            <th>Contact</th>
-            <th>Residence Address</th>
-            <th>NFC Tag UID</th>
-            <th>Laptop Model</th>
-            <th>Serial No.</th>
-            <th>Gatepass Status</th>
-          </tr>
-        </thead>
+        <a href="/admin/dashboard" class="secondary-btn">
+          Back to Dashboard
+        </a>
 
-        <tbody>
 
-          {% for r in records %}
+      </div>
 
-          <tr>
+    </header>
 
-            <td>
-              <span class="student-number">
-                {{ r.student_number }}
-              </span>
-            </td>
 
-            <td>
-              <span class="student-name">
-                {{ r.full_name }}
-              </span>
-            </td>
+    <section class="registry-card">
 
-            <td>
-              {{ r.phone }}
-            </td>
 
-            <td>
-              {{ r.residence_address }}
-            </td>
 
-            <td>
-              {% if r.tag_uid %}
-              <span class="tag tag-linked">
-                {{ r.tag_uid }}
-              </span>
-              {% else %}
-              <span class="tag tag-unlinked">
-                No Tag
-              </span>
-              {% endif %}
-            </td>
+      <section class="registry-card">
 
-            <td>
-              {{ r.laptop_model or "—" }}
-            </td>
+        <div class="registry-header">
+          <div>
+            <span class="section-label">Student Registry</span>
+            <h2>Gatepass Records</h2>
+          </div>
+        </div>
 
-            <td>
-              <span class="serial-number">
-                {{ r.serial_number or "—" }}
-              </span>
-            </td>
+        <div class="registry-filters">
 
-            <td>
-              {% if r.tag_uid %}
-              <span class="status-pill status-active">
-                Active
-              </span>
-              {% else %}
-              <span class="status-pill status-none">
-                Unregistered Hardware
-              </span>
-              {% endif %}
-            </td>
 
-          </tr>
+          <div class="filter-group">
+            <label for="studentSearch">Search Students</label>
+            <input type="text" id="studentSearch" placeholder="Search by student number or name...">
+          </div>
 
-          {% endfor %}
+          <div class="filter-group">
+            <label for="gatepassFilter">Gatepass Status</label>
+            <select id="gatepassFilter">
+              <option value="all">All Students</option>
+              <option value="registered">Registered</option>
+              <option value="unregistered">Unregistered</option>
+            </select>
+          </div>
 
-        </tbody>
+          <button type="button" id="clearFilters" class="secondary-btn">
+            Clear Filters
+          </button>
 
-      </table>
 
-    </div>
+        </div>
 
-    {% else %}
 
-    <div class="empty-state">
+        {% if records %}
 
-      <div class="empty-state-icon">—</div>
+        <div class="table-wrapper">
 
-      <h3>No Student Records</h3>
+          <table class="student-table" id="studentTable">
 
-      <p>
-        No student records were found in the database.
-      </p>
+            <thead>
+              <tr>
+                <th>Student No.</th>
+                <th>Full Name</th>
+                <th>Contact</th>
+                <th>Residence Address</th>
+                <th>NFC Tag UID</th>
+                <th>Laptop Model</th>
+                <th>Serial No.</th>
+                <th>Gatepass Status</th>
+                <th>Actions</th>
 
-    </div>
+              </tr>
+            </thead>
 
-    {% endif %}
+            <tbody>
 
-  </section>
+              {% for r in records %}
 
-</div>
-```
+              <tr>
 
-  </body>
+                <td>
+                  <span class="student-number">
+                    {{ r.student_number }}
+                  </span>
+                </td>
+
+                <td>
+                  <span class="student-name">
+                    {{ r.full_name }}
+                  </span>
+                </td>
+
+                <td>
+                  {{ r.phone }}
+                </td>
+
+                <td>
+                  {{ r.residence_address }}
+                </td>
+
+                <td>
+                  {% if r.tag_uid %}
+                  <span class="tag tag-linked">
+                    {{ r.tag_uid }}
+                  </span>
+                  {% else %}
+                  <span class="tag tag-unlinked">
+                    No Tag
+                  </span>
+                  {% endif %}
+                </td>
+
+                <td>
+                  {{ r.laptop_model or "—" }}
+                </td>
+
+                <td>
+                  <span class="serial-number">
+                    {{ r.serial_number or "—" }}
+                  </span>
+                </td>
+
+                <td>
+                  {% if r.tag_uid %}
+                  <span class="status-pill status-active">
+                    Active
+                  </span>
+                  {% else %}
+                  <span class="status-pill status-none">
+                    Unregistered Hardware
+                  </span>
+                  {% endif %}
+                </td>
+                <td>
+                  <a href="/admin/students/{{ r.student_number }}" class="table-action">
+                    View
+                  </a>
+                </td>
+
+
+              </tr>
+
+              {% endfor %}
+
+            </tbody>
+
+          </table>
+          <p id="noStudentResults" class="no-results" hidden>
+            No students match your search or filter.
+          </p>
+
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-state">
+
+          <div class="empty-state-icon">—</div>
+
+          <h3>No Student Records</h3>
+
+          <p>
+            No student records were found in the database.
+          </p>
+
+        </div>
+
+        {% endif %}
+
+      </section>
+
+  </div>
+
+  <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+
+</body>
+
 </html>

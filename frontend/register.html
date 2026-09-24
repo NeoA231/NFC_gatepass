@@ -5,14 +5,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-```
+
 <title>Student Registration - Gatepass System</title>
 
 <link
   rel="stylesheet"
   href="{{ url_for('static', filename='css/style.css') }}"
 />
-```
+
 
   </head>
 
@@ -20,7 +20,7 @@
     <main class="auth-container">
       <section class="auth-card">
 
-```
+
     <div class="auth-header">
       <span class="auth-label">VUT Gatepass</span>
 
@@ -43,7 +43,8 @@
     </div>
     {% endif %}
 
-    <form method="POST" action="/register">
+    <form action="/register" method="POST" id="registerForm">
+
 
       <div class="form-group">
         <label for="student_number">Student Number</label>
@@ -123,7 +124,8 @@
 
   </section>
 </main>
-```
+
+<script src="{{ url_for('static', filename='js/forms.js') }}"></script>
 
   </body>
 </html>

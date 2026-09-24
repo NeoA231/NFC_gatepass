@@ -1,0 +1,86 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+<title>Admin Login - VUT Gatepass</title>
+
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/style.css') }}"
+/>
+
+
+  </head>
+
+  <body>
+    <main class="auth-container">
+      <section class="auth-card">
+
+
+    <div class="auth-header">
+      <span class="auth-label">VUT Gatepass</span>
+
+      <h1>Administrator Login</h1>
+
+      <p>
+        Sign in to access the student registry and gatepass management portal.
+      </p>
+    </div>
+
+    {% if error %}
+    <div class="error-message">
+      {{ error }}
+    </div>
+    {% endif %}
+
+    <form method="POST" action="/admin/login" id="loginForm">
+
+      <div class="form-group">
+        <label for="admin_id">Administrator ID</label>
+
+        <input
+          type="text"
+          id="admin_id"
+          name="admin_id"
+          required
+          autocomplete="username"
+          placeholder="e.g. ADMIN001"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+
+        <input
+          type="password"
+          id="password"
+          name="password"
+          required
+          autocomplete="current-password"
+          placeholder="Enter your password"
+        />
+      </div>
+
+      <button type="submit" class="auth-btn">
+        Login as Administrator
+      </button>
+
+    </form>
+
+    <div class="auth-footer">
+      <span>Student?</span>
+      <a href="/login">Return to Student Login</a>
+    </div>
+
+  </section>
+</main>
+
+<script src="{{ url_for('static', filename='js/login.js') }}"></script>
+
+
+  </body>
+</html>

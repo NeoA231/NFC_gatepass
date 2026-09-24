@@ -1,86 +1,83 @@
 <!doctype html>
 
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-```
-<title>Student Login - Gatepass System</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='css/style.css') }}"
-/>
-```
 
-  </head>
+  <title>Student Login - Gatepass System</title>
 
-  <body>
-    <main class="auth-container">
-      <section class="auth-card">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 
-```
-    <div class="auth-header">
-      <span class="auth-label">VUT Gatepass</span>
 
-      <h1>Student Login</h1>
+</head>
 
-      <p>
-        Sign in to access your registered laptop and gatepass information.
-      </p>
-    </div>
+<body>
+  <main class="auth-container">
+    <section class="auth-card">
 
-    {% if error %}
-    <div class="error-message">
-      {{ error }}
-    </div>
-    {% endif %}
 
-    <form method="POST" action="/login" id="loginForm">
+      <div class="auth-header">
+        <span class="auth-label">VUT Gatepass</span>
 
-      <div class="form-group">
-        <label for="student_number">Student Number</label>
+        <h1>Student Login</h1>
 
-        <input
-          type="text"
-          id="student_number"
-          name="student_number"
-          required
-          autocomplete="username"
-          placeholder="e.g. 222337850"
-        />
+        <p>
+          Sign in to access your registered laptop and gatepass information.
+        </p>
       </div>
 
-      <div class="form-group">
-        <label for="password">Password</label>
+      {% if error %}
+      <div class="error-message">
+        {{ error }}
+      </div>
+      {% endif %}
 
-        <input
-          type="password"
-          id="password"
-          name="password"
-          required
-          autocomplete="current-password"
-          placeholder="Enter your password"
-        />
+      <form method="POST" id="loginForm" action="/login" id="loginForm">
+
+        <div class="form-group">
+          <label for="student_number">Student Number</label>
+
+          <input type="text" id="student_number" name="student_number" required autocomplete="username"
+            placeholder="e.g. 222337850" />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+
+          <input type="password" id="password" name="password" required autocomplete="current-password"
+            placeholder="Enter your password" />
+        </div>
+
+        <button type="submit" class="auth-btn">
+          Login
+        </button>
+
+      </form>
+
+      <div class="auth-footer">
+        <p>
+          Don't have an account?
+          <a href="/register">Register here</a>
+        </p>
+
+        <p>
+          Administrator?
+          <a href="/admin/login">Admin Login</a>
+        </p>
+
       </div>
 
-      <button type="submit" class="auth-btn">
-        Login
-      </button>
 
-    </form>
+    </section>
+  </main>
 
-    <div class="auth-footer">
-      <span>Need an account?</span>
-      <a href="/register">Register here</a>
-    </div>
+  <script src="{{ url_for('static', filename='js/login.js') }}"></script>
 
-  </section>
-</main>
 
-<script src="{{ url_for('static', filename='js/login.js') }}"></script>
-```
 
-  </body>
+</body>
+
 </html>

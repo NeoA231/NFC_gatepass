@@ -1,0 +1,95 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Gatepass - VUT Gatepass</title>
+
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+
+
+</head>
+
+<body>
+    <main class="auth-container">
+        <section class="auth-card">
+
+
+            <div class="auth-header">
+                <span class="auth-label">Administrator</span>
+
+                <h1>Edit Gatepass</h1>
+
+                <p>
+                    Update the student's laptop and NFC registration details.
+                </p>
+            </div>
+
+            <form method="POST" id="editGatepassForm" data-confirm-form="Are you sure you want to save these gatepass changes?">
+
+
+                <div class="form-group">
+                    <label>Student</label>
+                    <input type="text" value="{{ student.full_name }}" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label for="tag_uid">NFC Tag UID</label>
+
+                    <input type="text" id="tag_uid" name="tag_uid" value="{{ gatepass.tag_uid if gatepass else '' }}"
+                        placeholder="04A1B2C3D4E5" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="laptop_model">Laptop Model</label>
+
+                    <input type="text" id="laptop_model" name="laptop_model"
+                        value="{{ gatepass.laptop_model if gatepass else '' }}" placeholder="Dell Latitude 5420"
+                        required />
+                </div>
+
+                <div class="form-group">
+                    <label for="serial_number">Serial Number</label>
+
+                    <input type="text" id="serial_number" name="serial_number"
+                        value="{{ gatepass.serial_number if gatepass else '' }}" placeholder="DL5420-TEST-001"
+                        required />
+                </div>
+
+                <div class="form-group">
+                    <label for="is_active">Gatepass Status</label>
+
+                    <select id="is_active" name="is_active">
+                        <option value="1" {% if gatepass and gatepass.is_active %}selected{% endif %}>
+                            Active
+                        </option>
+
+                        <option value="0" {% if gatepass and not gatepass.is_active %}selected{% endif %}>
+                            Inactive
+                        </option>
+                    </select>
+                </div>
+
+                <div class="admin-actions">
+                    <button type="submit" class="primary-btn">
+                        Save Gatepass
+                    </button>
+
+                    <a href="/admin/students/{{ student.student_number }}" class="secondary-btn">
+                        Cancel
+                    </a>
+                </div>
+
+            </form>
+
+        </section>
+    </main>
+
+<script src="{{ url_for('static', filename='js/forms.js') }}"></script>
+
+</body>
+
+</html>

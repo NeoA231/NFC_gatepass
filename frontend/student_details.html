@@ -1,0 +1,176 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Details - VUT Gatepass</title>
+
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+
+
+</head>
+
+<body>
+    <div class="admin-container">
+
+
+        <header class="admin-header">
+            <div class="admin-heading">
+                <span class="admin-label">Student Profile</span>
+                <h1>{{ student.full_name }}</h1>
+                <p>Student Number: {{ student.student_number }}</p>
+            </div>
+
+            <a href="/admin/students" class="primary-btn">
+                Back to Registry
+            </a>
+        </header>
+
+        <main class="dashboard-grid">
+
+            <section class="dashboard-card">
+                <div class="card-header">
+                    <div>
+                        <span class="card-label">Student Information</span>
+                        <h2>Profile Details</h2>
+                    </div>
+                </div>
+
+                <div class="profile-details">
+
+                    <div class="detail-item">
+                        <span class="detail-label">Student Number</span>
+                        <span class="detail-value">
+                            {{ student.student_number }}
+                        </span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">Full Name</span>
+                        <span class="detail-value">
+                            {{ student.full_name }}
+                        </span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">Phone</span>
+                        <span class="detail-value">
+                            {{ student.phone }}
+                        </span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">Residence Address</span>
+                        <span class="detail-value">
+                            {{ student.residence_address }}
+                        </span>
+                    </div>
+
+                </div>
+
+                <a href="/admin/students/{{ student.student_number }}/edit" class="secondary-btn"
+                    data-confirm="Open the student information editor?">
+                    Edit Student Information
+                </a>
+
+
+
+            </section>
+
+            <section class="dashboard-card">
+                <div class="card-header">
+                    <div>
+                        <span class="card-label">Gatepass</span>
+                        <h2>Laptop Registration</h2>
+                    </div>
+                </div>
+
+                {% if gatepass %}
+
+                {% if gatepass.is_active %}
+
+                <div class="gatepass-status">
+                    <span class="status-indicator"></span>
+                    <span>Gatepass Active</span>
+                </div>
+
+                {% else %}
+
+                <div class="gatepass-status inactive-status">
+                    <span class="status-indicator inactive-dot"></span>
+                    <span>Gatepass Inactive</span>
+                </div>
+
+                {% endif %}
+
+
+                <div class="gatepass-details">
+
+                    <div class="detail-item">
+                        <span class="detail-label">NFC Tag UID</span>
+                        <span class="tag-badge">
+                            {{ gatepass.tag_uid }}
+                        </span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">Laptop Model</span>
+                        <span class="detail-value">
+                            {{ gatepass.laptop_model }}
+                        </span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">Serial Number</span>
+                        <span class="detail-value serial-number">
+                            {{ gatepass.serial_number }}
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="admin-actions">
+                    <a href="/admin/students/{{ student.student_number }}/gatepass" class="secondary-btn"
+                        data-confirm="Open the gatepass editor?">
+                        Edit Gatepass
+                    </a>
+
+
+
+                    <button class="secondary-btn">
+                        Disable Gatepass
+                    </button>
+                </div>
+
+                {% else %}
+
+                <div class="empty-gatepass">
+                    <div class="empty-icon">NFC</div>
+
+                    <h3>No Gatepass Registered</h3>
+
+                    <p>
+                        This student has not registered a laptop or NFC tag.
+                    </p>
+
+                    <button class="primary-btn">
+                        Register Gatepass
+                    </button>
+                </div>
+
+                {% endif %}
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+
+</body>
+
+</html>

@@ -150,12 +150,10 @@ select:focus {
     padding: 30px 20px;
 
     background:
-        linear-gradient(
-            135deg,
+        linear-gradient(135deg,
             #06101c 0%,
             #0a1d31 55%,
-            #07111f 100%
-        );
+            #07111f 100%);
 }
 
 .auth-card {
@@ -916,4 +914,108 @@ select:focus {
     .student-table {
         min-width: 1050px;
     }
+}
+
+.admin-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+}
+
+.secondary-btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 11px 18px;
+    background: transparent;
+    color: #fca5a5;
+    border: 1px solid #7f2930;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.secondary-btn:hover {
+    background: rgba(239, 68, 68, 0.12);
+}
+
+.table-action {
+    color: #72b9f0;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.table-action:hover {
+    text-decoration: underline;
+}
+
+.inactive-status {
+background: rgba(239, 68, 68, 0.12);
+border: 1px solid rgba(239, 68, 68, 0.25);
+color: #fca5a5;
+}
+
+.inactive-dot {
+background: #ef4444;
+}
+
+.registry-filters {
+display: flex;
+align-items: flex-end;
+gap: 16px;
+margin-bottom: 24px;
+flex-wrap: wrap;
+}
+
+.filter-group {
+display: flex;
+flex-direction: column;
+gap: 7px;
+flex: 1;
+min-width: 220px;
+}
+
+.filter-group label {
+color: #cbd5e1;
+font-size: 13px;
+font-weight: 600;
+}
+
+.filter-group input,
+.filter-group select {
+width: 100%;
+box-sizing: border-box;
+padding: 11px 12px;
+background: #07111f;
+border: 1px solid #24364a;
+border-radius: 6px;
+color: #f8fafc;
+font-size: 14px;
+}
+
+.filter-group input:focus,
+.filter-group select:focus {
+outline: none;
+border-color: #0057a8;
+}
+
+.no-results {
+padding: 24px;
+text-align: center;
+color: #94a3b8;
+font-size: 14px;
+}
+
+.admin-header-actions {
+display: flex;
+align-items: center;
+gap: 16px;
+flex-wrap: wrap;
+}
+
+.admin-header-actions .secondary-btn {
+white-space: nowrap;
 }

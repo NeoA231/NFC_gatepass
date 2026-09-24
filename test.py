@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 
-
 # ============================================================
 # FLASK CONFIGURATION
 # ============================================================
@@ -9,7 +8,7 @@ app = Flask(
     __name__,
     template_folder="frontend",
     static_folder="frontend",
-    static_url_path="/static"
+    static_url_path="/static",
 )
 
 app.secret_key = "nfc-gatepass-development-key"
@@ -24,14 +23,19 @@ students = [
         "student_number": "VUT2024001",
         "full_name": "Test Student",
         "phone": "071 234 5678",
-        "residence_address": "VUT Student Residence"
+        "residence_address": "VUT Student Residence",
     },
     {
         "student_number": "VUT2024002",
         "full_name": "Another Student",
         "phone": "072 345 6789",
-        "residence_address": "Private Residence"
-    }
+        "residence_address": "Private Residence",
+    },
+]
+admins = [
+    {"admin_id": "ADMIN001",
+     "name": "System Administrator",
+     "password": "admin123"}
 ]
 
 
@@ -39,34 +43,16 @@ gatepasses = {
     "VUT2024001": {
         "tag_uid": "04A1B2C3D4E5",
         "laptop_model": "Dell Latitude 5420",
-        "serial_number": "DL5420-TEST-001"
+        "serial_number": "DL5420-TEST-001",
+        "is_active": True,
     }
 }
 
 
 # ============================================================
-# STATIC FILE ROUTES
-# ============================================================
-#
-# Our static files are located inside:
-#
-# frontend/css/
-# frontend/js/
-#
-# Therefore:
-#
-# /static/css/style.css
-# /static/js/login.js
-# /static/js/dashboard.js
-# /static/js/admin.js
-#
-# will be served from the frontend folder.
-# ============================================================
-
-
-# ============================================================
 # HOME
 # ============================================================
+
 
 @app.route("/")
 def index():
@@ -76,6 +62,7 @@ def index():
 # ============================================================
 # LOGIN
 # ============================================================
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -95,7 +82,7 @@ def login():
                 for student in students
                 if student["student_number"] == student_number
             ),
-            None
+            None,
         )
 
         if student:
@@ -106,8 +93,7 @@ def login():
             return redirect(url_for("dashboard"))
 
         return render_template(
-            "login.html",
-            error="Invalid student number or password."
+            "login.html", error="Invalid student number or password."
         )
 
     return render_template("login.html")
@@ -116,6 +102,7 @@ def login():
 # ============================================================
 # REGISTER
 # ============================================================
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -132,7 +119,7 @@ def register():
             "student_number": student_number,
             "full_name": full_name,
             "phone": phone,
-            "residence_address": residence_address
+            "residence_address": residence_address,
         }
 
         students.append(new_student)
@@ -149,6 +136,7 @@ def register():
 # STUDENT DASHBOARD
 # ============================================================
 
+
 @app.route("/dashboard")
 def dashboard():
 
@@ -163,7 +151,7 @@ def dashboard():
             for student in students
             if student["student_number"] == student_number
         ),
-        None
+        None,
     )
 
     if not student:
@@ -172,16 +160,13 @@ def dashboard():
 
     gatepass = gatepasses.get(student_number)
 
-    return render_template(
-        "dashboard.html",
-        student=student,
-        gatepass=gatepass
-    )
+    return render_template("dashboard.html", student=student, gatepass=gatepass)
 
 
 # ============================================================
 # CLAIM / REGISTER LAPTOP
 # ============================================================
+
 
 @app.route("/claim", methods=["GET", "POST"])
 def claim():
@@ -198,7 +183,7 @@ def claim():
         gatepasses[student_number] = {
             "tag_uid": tag_uid,
             "laptop_model": laptop_model,
-            "serial_number": serial_number
+            "serial_number": serial_number,
         }
 
         return redirect(url_for("dashboard"))
@@ -210,18 +195,64 @@ def claim():
 # ADMIN
 # ============================================================
 
+
+@app.route("/admin/login", methods=["GET", "POST"])
+def admin_login():
+
+    if request.method == "POST":
+
+        admin_id = request.form.get("admin_id")
+        password = request.form.get("password")
+
+        admin = next(
+            (
+                a
+                for a in admins
+                if a["admin_id"] == admin_id and a["password"] == password
+            ),
+            None,
+        )
+
+        if admin:
+            session["role"] = "admin"
+            session["admin_name"] = admin["name"]
+            return redirect(url_for("admin_dashboard"))
+
+        return render_template(
+            "admin_login.html", error="Invalid administrator credentials."
+        )
+
+    return render_template("admin_login.html")
+
+
+@app.route("/admin/dashboard")
+def admin_dashboard():
+
+    if session.get("role") != "admin":
+        return redirect(url_for("admin_login"))
+
+    total_students = len(students)
+    active_gatepasses = len(gatepasses)
+    unregistered = total_students - active_gatepasses
+
+    return render_template(
+        "admin_dashboard.html",
+        admin_name=session.get("admin_name"),
+        total_students=total_students,
+        active_gatepasses=active_gatepasses,
+        unregistered=unregistered,
+    )
+
+
 @app.route("/admin")
 def admin():
-
-    # Temporary admin access for frontend testing.
-    session["role"] = "admin"
-
-    return redirect(url_for("admin_students"))
+    return redirect(url_for("admin_login"))
 
 
 # ============================================================
 # ADMIN STUDENT REGISTRY
 # ============================================================
+
 
 @app.route("/admin/students")
 def admin_students():
@@ -233,46 +264,108 @@ def admin_students():
 
     for student in students:
 
-        gatepass = gatepasses.get(
-            student["student_number"]
-        )
+        gatepass = gatepasses.get(student["student_number"])
 
         record = {
             "student_number": student["student_number"],
             "full_name": student["full_name"],
             "phone": student["phone"],
             "residence_address": student["residence_address"],
-
-            "tag_uid": (
-                gatepass["tag_uid"]
-                if gatepass
-                else None
-            ),
-
-            "laptop_model": (
-                gatepass["laptop_model"]
-                if gatepass
-                else None
-            ),
-
-            "serial_number": (
-                gatepass["serial_number"]
-                if gatepass
-                else None
-            )
+            "tag_uid": (gatepass["tag_uid"] if gatepass else None),
+            "laptop_model": (gatepass["laptop_model"] if gatepass else None),
+            "serial_number": (gatepass["serial_number"] if gatepass else None),
         }
 
         records.append(record)
 
-    return render_template(
-        "admin_students.html",
-        records=records
+    return render_template("admin_students.html", records=records)
+
+
+@app.route("/admin/students/<student_number>")
+def student_details(student_number):
+
+    if session.get("role") != "admin":
+        return redirect(url_for("admin_login"))
+
+    student = next((s for s in students if s["student_number"] == student_number), None)
+
+    if not student:
+        return redirect(url_for("admin_students"))
+
+    gatepass = gatepasses.get(student_number)
+
+    return render_template("student_details.html", student=student, gatepass=gatepass)
+
+
+@app.route("/admin/students/<student_number>/edit", methods=["GET", "POST"])
+def edit_student(student_number):
+
+    if session.get("role") != "admin":
+        return redirect(url_for("admin_login"))
+
+    student = next((s for s in students if s["student_number"] == student_number), None)
+
+    if not student:
+        return redirect(url_for("admin_students"))
+
+    if request.method == "POST":
+
+        student["full_name"] = request.form.get("full_name")
+        student["phone"] = request.form.get("phone")
+        student["residence_address"] = request.form.get("residence_address")
+
+        return redirect(url_for("student_details", student_number=student_number))
+
+    return render_template("edit_student.html", student=student)
+
+@app.route(
+"/admin/students/<student_number>/gatepass",
+methods=["GET", "POST"]
+)
+def edit_gatepass(student_number):
+
+    if session.get("role") != "admin":
+        return redirect(url_for("admin_login"))
+
+    student = next(
+        (
+            s for s in students
+            if s["student_number"] == student_number
+        ),
+        None
     )
 
+    if not student:
+        return redirect(url_for("admin_students"))
+
+    gatepass = gatepasses.get(student_number)
+
+    if request.method == "POST":
+
+        gatepasses[student_number] = {
+            "tag_uid": request.form.get("tag_uid"),
+            "laptop_model": request.form.get("laptop_model"),
+            "serial_number": request.form.get("serial_number"),
+            "is_active": request.form.get("is_active") == "1"
+        }
+
+        return redirect(
+            url_for(
+                "student_details",
+                student_number=student_number
+            )
+        )
+
+    return render_template(
+        "edit_gatepass.html",
+        student=student,
+        gatepass=gatepass
+    )
 
 # ============================================================
 # LOGOUT
 # ============================================================
+
 
 @app.route("/logout", methods=["POST"])
 def logout():
@@ -288,8 +381,4 @@ def logout():
 
 if __name__ == "__main__":
 
-    app.run(
-        debug=True,
-        host="127.0.0.1",
-        port=5000
-    )
+    app.run(debug=True, host="127.0.0.1", port=5000)

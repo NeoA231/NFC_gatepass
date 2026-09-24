@@ -1,0 +1,81 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Student - VUT Gatepass</title>
+
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+
+
+</head>
+
+<body>
+    <main class="auth-container">
+        <section class="auth-card">
+
+
+            <div class="auth-header">
+                <span class="auth-label">Administrator</span>
+
+                <h1>Edit Student</h1>
+
+                <p>
+                    Update the student's profile information.
+                </p>
+            </div>
+
+            <form method="POST" id="editStudentForm" data-confirm-form="Are you sure you want to save these student information changes?">
+
+
+                <div class="form-group">
+                    <label for="student_number">Student Number</label>
+
+                    <input type="text" id="student_number" name="student_number" value="{{ student.student_number }}"
+                        readonly />
+                </div>
+
+                <div class="form-group">
+                    <label for="full_name">Full Name</label>
+
+                    <input type="text" id="full_name" name="full_name" value="{{ student.full_name }}" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+
+                    <input type="tel" id="phone" name="phone" value="{{ student.phone }}" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="residence_address">Residence Address</label>
+
+                    <textarea id="residence_address" name="residence_address" rows="3"
+                        required>{{ student.residence_address }}</textarea>
+                </div>
+
+                <div class="admin-actions">
+
+                    <button type="submit" class="primary-btn">
+                        Save Changes
+                    </button>
+
+                    <a href="/admin/students/{{ student.student_number }}" class="secondary-btn">
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </section>
+    </main>
+
+<script src="{{ url_for('static', filename='js/forms.js') }}"></script>
+
+</body>
+
+</html>
