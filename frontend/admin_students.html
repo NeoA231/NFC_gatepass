@@ -58,35 +58,53 @@
       <section class="registry-card">
 
         <div class="registry-header">
+
+
           <div>
-            <span class="section-label">Student Registry</span>
-            <h2>Gatepass Records</h2>
-          </div>
-        </div>
-
-        <div class="registry-filters">
-
-
-          <div class="filter-group">
-            <label for="studentSearch">Search Students</label>
-            <input type="text" id="studentSearch" placeholder="Search by student number or name...">
+            <p class="section-label">STUDENT MANAGEMENT</p>
+            <h2>Student Registry and Gatepass Records</h2>
+            <p>View and manage registered students and their gatepass information.</p>
           </div>
 
-          <div class="filter-group">
-            <label for="gatepassFilter">Gatepass Status</label>
-            <select id="gatepassFilter">
-              <option value="all">All Students</option>
-              <option value="registered">Registered</option>
-              <option value="unregistered">Unregistered</option>
-            </select>
-          </div>
-
-          <button type="button" id="clearFilters" class="secondary-btn">
-            Clear Filters
-          </button>
+          <a href="/admin/students/add" class="primary-btn">
+            Add Student
+          </a>
 
 
         </div>
+
+
+
+<div class="registry-filters">
+
+
+<div class="filter-group search-filter">
+    <label for="studentSearch">Search Students</label>
+    <input
+        type="text"
+        id="studentSearch"
+        placeholder="Search by student number or name..."
+    >
+</div>
+
+<div class="filter-group status-filter">
+    <label for="gatepassFilter">Gatepass Status</label>
+    <select id="gatepassFilter">
+        <option value="all">All Students</option>
+        <option value="registered">Registered</option>
+        <option value="unregistered">Unregistered</option>
+    </select>
+</div>
+
+<div class="filter-action">
+    <button type="button" id="clearFilters" class="secondary-btn">
+        Clear Filters
+    </button>
+</div>
+
+
+</div>
+
 
 
         {% if records %}

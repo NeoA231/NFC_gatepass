@@ -953,69 +953,113 @@ select:focus {
 }
 
 .inactive-status {
-background: rgba(239, 68, 68, 0.12);
-border: 1px solid rgba(239, 68, 68, 0.25);
-color: #fca5a5;
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    color: #fca5a5;
 }
 
 .inactive-dot {
-background: #ef4444;
+    background: #ef4444;
 }
 
 .registry-filters {
-display: flex;
-align-items: flex-end;
-gap: 16px;
-margin-bottom: 24px;
-flex-wrap: wrap;
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 24px;
 }
 
-.filter-group {
-display: flex;
-flex-direction: column;
-gap: 7px;
-flex: 1;
-min-width: 220px;
+.registry-filters .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
 }
 
-.filter-group label {
-color: #cbd5e1;
-font-size: 13px;
-font-weight: 600;
+.registry-filters .search-filter {
+    flex: 2;
 }
 
-.filter-group input,
-.filter-group select {
-width: 100%;
-box-sizing: border-box;
-padding: 11px 12px;
-background: #07111f;
-border: 1px solid #24364a;
-border-radius: 6px;
-color: #f8fafc;
-font-size: 14px;
+.registry-filters .status-filter {
+    flex: 1;
 }
 
-.filter-group input:focus,
-.filter-group select:focus {
-outline: none;
-border-color: #0057a8;
+.registry-filters .filter-action {
+    flex: 0 0 auto;
 }
+
+.registry-filters .filter-group label {
+    color: #cbd5e1;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.registry-filters .filter-group input,
+.registry-filters .filter-group select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 11px 12px;
+    background: #07111f;
+    border: 1px solid #24364a;
+    border-radius: 6px;
+    color: #f8fafc;
+    font-size: 14px;
+}
+
+.registry-filters .filter-group input:focus,
+.registry-filters .filter-group select:focus {
+    outline: none;
+    border-color: #0057a8;
+}
+
+.registry-filters .secondary-btn {
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+
+    .registry-filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .registry-filters .search-filter,
+    .registry-filters .status-filter,
+    .registry-filters .filter-action {
+        width: 100%;
+        flex: none;
+    }
+
+
+}
+
 
 .no-results {
-padding: 24px;
-text-align: center;
-color: #94a3b8;
-font-size: 14px;
+    padding: 24px;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 14px;
 }
 
 .admin-header-actions {
-display: flex;
-align-items: center;
-gap: 16px;
-flex-wrap: wrap;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
 }
 
 .admin-header-actions .secondary-btn {
-white-space: nowrap;
+    white-space: nowrap;
+}
+
+.registry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.registry-header .primary-btn {
+    white-space: nowrap;
 }

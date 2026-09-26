@@ -1,0 +1,90 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>Add Student - Gatepass System</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+
+</head>
+
+<body>
+
+
+    <main class="auth-container">
+
+        <section class="auth-card">
+
+            <div class="auth-header">
+                <p class="admin-label">ADMIN PANEL</p>
+                <h1>Add Student</h1>
+                <p>Register a new student in the Gatepass system.</p>
+            </div>
+
+            {% if error %}
+            <div class="error-message">
+                {{ error }}
+            </div>
+            {% endif %}
+
+            <form action="/admin/students/add" method="POST" id="addStudentForm">
+
+                <div class="form-group">
+                    <label for="student_number" class="auth-label">
+                        Student Number
+                    </label>
+
+                    <input type="text" id="student_number" name="student_number" placeholder="e.g. VUT2024003" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="full_name" class="auth-label">
+                        Full Name
+                    </label>
+
+                    <input type="text" id="full_name" name="full_name" placeholder="Enter student's full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone" class="auth-label">
+                        Phone Number
+                    </label>
+
+                    <input type="text" id="phone" name="phone" placeholder="e.g. 073 456 7890" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="residence_address" class="auth-label">
+                        Residence Address
+                    </label>
+
+                    <input type="text" id="residence_address" name="residence_address"
+                        placeholder="Enter residence address" required>
+                </div>
+
+                <button type="submit" class="primary-btn">
+                    Add Student
+                </button>
+
+                <a href="/admin/students" class="secondary-btn">
+                    Cancel
+                </a>
+
+            </form>
+
+        </section>
+
+    </main>
+
+    <script src="{{ url_for('static', filename='js/forms.js') }}"></script>
+
+
+</body>
+
+</html>

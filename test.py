@@ -318,6 +318,37 @@ def edit_student(student_number):
 
     return render_template("edit_student.html", student=student)
 
+@app.route("/admin/students/add", methods=["GET", "POST"])
+def add_student():
+    if session.get("role") != "admin":
+        return redirect(url_for("admin_login"))
+
+
+    if request.method == "POST":
+        student_number = request.form.get("student_number", "").strip()
+        full_name = request.form.get("full_name", "").strip()
+        phone = request.form.get("phone", "").strip()
+        residence_address = request.form.get("residence_address", "").strip()
+
+        if not student_number or not full_name or not phone or not residence_address:
+            return render_template(
+                "add_student.html",
+                error="Please complete all required fields."
+            )
+
+        students.append({
+            "student_number": student_number,
+            "full_name": full_name,
+            "phone": phone,
+            "residence_address": residence_address
+        })
+
+        return redirect(url_for("admin_students"))
+
+    return render_template("add_student.html")
+
+
+
 @app.route(
 "/admin/students/<student_number>/gatepass",
 methods=["GET", "POST"]
