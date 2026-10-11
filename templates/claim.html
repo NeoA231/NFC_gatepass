@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register Laptop & NFC Tag - Gatepass System</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        background: #f4f6f9;
+        margin: 0;
+        padding: 40px 16px;
+        display: flex;
+        justify-content: center;
+      }
+      .card {
+        background: #fff;
+        max-width: 460px;
+        width: 100%;
+        padding: 32px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+      h2 {
+        margin-top: 0;
+        margin-bottom: 8px;
+        font-size: 1.5rem;
+        color: #1f2937;
+      }
+      p.subtitle {
+        margin-top: 0;
+        margin-bottom: 24px;
+        font-size: 0.85rem;
+        color: #6b7280;
+      }
+      .form-group {
+        margin-bottom: 16px;
+      }
+      label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #374151;
+      }
+      .hint {
+        font-size: 0.75rem;
+        color: #6b7280;
+        margin-top: 4px;
+      }
+      input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 10px 12px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-size: 0.95rem;
+      }
+      input:focus {
+        outline: none;
+        border-color: #2563eb;
+      }
+      button {
+        width: 100%;
+        padding: 12px;
+        background: #2563eb;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 8px;
+      }
+      button:hover {
+        background: #1d4ed8;
+      }
+      .alert-error {
+        background: #fee2e2;
+        color: #991b1b;
+        padding: 12px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        font-size: 0.9rem;
+      }
+      .back-link {
+        text-align: center;
+        margin-top: 16px;
+        font-size: 0.85rem;
+      }
+      .back-link a {
+        color: #4b5563;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h2>Link Gatepass</h2>
+      <p class="subtitle">
+        Bind your issued NFC tag to your personal laptop hardware.
+      </p>
+
+      {% if error %}
+      <div class="alert-error">{{ error }}</div>
+      {% endif %}
+
+      <form method="POST" action="/claim">
+        <div class="form-group">
+          <label for="tag_uid">NFC Tag UID</label>
+          <input
+            type="text"
+            id="tag_uid"
+            name="tag_uid"
+            required
+            placeholder="e.g. 04A1B2C3D4"
+          />
+          <div class="hint">
+            The unique hex identifier written on or scanned from your physical
+            tag.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="laptop_model">Laptop Make & Model</label>
+          <input
+            type="text"
+            id="laptop_model"
+            name="laptop_model"
+            required
+            placeholder="e.g. Dell Latitude 5420"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="serial_number">Hardware Serial Number</label>
+          <input
+            type="text"
+            id="serial_number"
+            name="serial_number"
+            required
+            placeholder="e.g. 5CD2341ABC"
+          />
+          <div class="hint">
+            Located on the underside chassis label or BIOS.
+          </div>
+        </div>
+
+        <button type="submit">Complete Registration</button>
+      </form>
+
+      <div class="back-link">
+        <a href="/dashboard">&larr; Return to Dashboard</a>
+      </div>
+    </div>
+  </body>
+</html>

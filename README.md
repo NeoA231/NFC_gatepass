@@ -33,7 +33,7 @@ Students can:
 * Register an account
 * Log into a session-backed dashboard
 * View their gatepass information
-* Link their laptop hardware to an issued NFC tag
+* Link their laptop hardware to an issued NFC tag via the dedicated `/claim` portal
 
 ### Administrator Portal
 
@@ -47,7 +47,7 @@ Administrators can access a centralized directory containing:
 ## Project Structure
 
 ```text
-nfc-gatepass/
+NFC_gatepass/
 │
 ├── app.py                  # Flask application routes, session handling, and APIs
 │
@@ -59,6 +59,7 @@ nfc-gatepass/
 │   ├── register.html       # Student registration page
 │   ├── login.html          # Authentication portal
 │   ├── dashboard.html      # Protected student dashboard
+│   ├── claim.html          # NFC tag and hardware registration page
 │   └── admin_students.html # Administrator student and hardware overview
 │
 └── README.md
@@ -95,8 +96,8 @@ Stores gatepass and hardware information, including:
 Open PowerShell and run:
 
 ```powershell
-git clone https://github.com/<your-username>/nfc-gatepass.git
-cd nfc-gatepass
+git clone https://github.com/NeoA231/NFC_gatepass.git
+cd NFC_gatepass
 ```
 
 ### 2. Create a Virtual Environment
@@ -109,7 +110,7 @@ python -m venv .venv
 ### 3. Install Dependencies
 
 ```powershell
-pip install Flask werkzeug
+pip install -r requirements.txt
 ```
 
 ### 4. Initialize the SQLite Database
@@ -135,18 +136,21 @@ http://127.0.0.1:5000
 
 | Route                      | Method        | Description                                                    |
 | -------------------------- | ------------- | -------------------------------------------------------------- |
-| `/register`                | `GET`, `POST` | Student account registration                                   |
+| `/register`                | `GET`, `POST` | Student account registration portal                            |
 | `/login`                   | `GET`, `POST` | Student login portal                                           |
+| `/logout`                  | `GET`, `POST` | Student session logout                                         |
 | `/dashboard`               | `GET`         | Authenticated student dashboard showing linked gatepass status |
+| `/claim`                   | `GET`, `POST` | In-browser hardware and NFC tag linking interface              |
 | `/admin/students`          | `GET`         | Administrator registry containing students and tags            |
-| `/api/tags/provision`      | `POST`        | Registers a blank NFC tag UID                                  |
-| `/api/gatepass/claim`      | `POST`        | Links a student and laptop serial number to an NFC tag UID     |
+| `/api/register`            | `POST`        | REST API: Student profile registration                         |
+| `/api/tags/provision`      | `POST`        | REST API: Registers a blank NFC tag UID                        |
+| `/api/gatepass/claim`      | `POST`        | REST API: Links student & laptop serial to an NFC tag UID      |
 | `/api/verify/guard/<uid>`  | `GET`         | Security guard verification lookup                             |
 | `/api/verify/public/<uid>` | `GET`         | Public verification endpoint with masked student information   |
 
 ## Planned Roadmap
 
-* [ ] Build the in-browser `/claim` interface for students
+* [x] Build the in-browser `/claim` interface for students
 * [ ] Upgrade the storage layer from SQLite to a dedicated SQL server such as PostgreSQL or MySQL
 * [ ] Deploy to a personal Linux server
 * [ ] Configure Nginx as a reverse proxy
@@ -165,4 +169,4 @@ http://127.0.0.1:5000
 
 ## Project Status
 
-The project is currently under development. The core Flask application, database structure, student authentication, gatepass management, and verification endpoints are being developed as part of the NFC-based student laptop gatepass system.
+The project is currently under development. The core Flask application, database structure, student authentication, hardware claiming portal, and verification endpoints are operational.
